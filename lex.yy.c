@@ -935,31 +935,31 @@ return LIT_FALSE;
 case 22:
 YY_RULE_SETUP
 #line 51 "scanner.l"
-{hashInsert(yytext); return LIT_INTEGER;}
+{hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER;}
 	YY_BREAK
 /* LITERAIS FLOAT */
 case 23:
 YY_RULE_SETUP
 #line 54 "scanner.l"
-{hashInsert(yytext); return LIT_FLOAT;}
+{hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT;}
 	YY_BREAK
 /* STRING */
 case 24:
 YY_RULE_SETUP
 #line 57 "scanner.l"
-{hashInsert(yytext); return LIT_STRING;}
+{hashInsert(yytext, LIT_STRING); return LIT_STRING;}
 	YY_BREAK
 /* CARACTERE */
 case 25:
 YY_RULE_SETUP
 #line 60 "scanner.l"
-{hashInsert(yytext); return LIT_CHAR;}
+{hashInsert(yytext, LIT_CHAR); return LIT_CHAR;}
 	YY_BREAK
 /* IDENTIFICADORES */
 case 26:
 YY_RULE_SETUP
 #line 63 "scanner.l"
-{hashInsert(yytext); return TK_IDENTIFIER;}
+{hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
 	YY_BREAK
 /* COMENTÁRIOS */
 case 27:

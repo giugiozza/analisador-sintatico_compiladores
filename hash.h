@@ -1,5 +1,5 @@
-#ifndef hash_h
-#define hash_h
+#ifndef hash_header
+#define hash_header
 
 #include <stdio.h>
 

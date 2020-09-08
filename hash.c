@@ -37,6 +37,11 @@ HASH_NODE *hashFind(char *text){
 HASH_NODE *hashInsert(char *text, int type){
     HASH_NODE *newNode;
     int address = hashAddress(text);
+   
+    //testa se símbolo já está na tabela p/ não repetir
+    if ((newNode = hashFind(text)) != 0)
+        return newNode;
+    
     newNode = (HASH_NODE*) calloc(1, sizeof(HASH_NODE));
     newNode-> type = type;
     newNode-> text = (char*) calloc(strlen(text)+1, sizeof(char));
