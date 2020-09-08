@@ -48,19 +48,19 @@
 "FALSE" return LIT_FALSE;
 
  /* LITERAIS INTEIROS */
-[A-F0-9]+   {hashInsert(yytext); return LIT_INTEGER;}
+[A-F0-9]+   {hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER;}
 
  /* LITERAIS FLOAT */
-[A-F0-9]*\.[A-F0-9]+    {hashInsert(yytext); return LIT_FLOAT;}
+[A-F0-9]*\.[A-F0-9]+    {hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT;}
 
  /* STRING */
-\"([^"\\\n]|\\.)*\" {hashInsert(yytext); return LIT_STRING;}
+\"([^"\\\n]|\\.)*\" {hashInsert(yytext, LIT_STRING); return LIT_STRING;}
 
  /* CARACTERE */
-\'(\\.|[^'\n\t])'    {hashInsert(yytext); return LIT_CHAR;}
+\'(\\.|[^'\n\t])'    {hashInsert(yytext, LIT_CHAR); return LIT_CHAR;}
 
  /* IDENTIFICADORES */
-[a-zA-Z@_]+[0-9A-Za-z@_]*   {hashInsert(yytext); return TK_IDENTIFIER;}
+[a-zA-Z@_]+[0-9A-Za-z@_]*   {hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
 
  /* COMENTÁRIOS */
 "//".*

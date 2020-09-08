@@ -23,18 +23,26 @@ int hashAddress(char *text){
 }
 
 HASH_NODE *hashFind(char *text){
+    HASH_NODE *node;
+    int address = hashAddress(text);
+    for(node=Table[address]; node != 0; node = node->next){
+        //vai comparar as 2 strings - se iguais (=0), deve-se retornar o nodo
+        if (strcmp(node->text, text) == 0)
+            return node;
+    }
+    //caso tenha percorrido toda a lista (node == 0) e não foi encontrado o lexema:
     return 0;
 }
 
-HASH_NODE *hashInsert(char *text){
+HASH_NODE *hashInsert(char *text, int type){
     HASH_NODE *newNode;
     int address = hashAddress(text);
     newNode = (HASH_NODE*) calloc(1, sizeof(HASH_NODE));
-    newNode-> type = 1;
+    newNode-> type = type;
     newNode-> text = (char*) calloc(strlen(text)+1, sizeof(char));
     strcpy(newNode->text, text);
     
-    // tabela cresce de baixo para cima
+    // encadeamento --> tabela cresce de baixo para cima
     newNode->next = Table[address];
     Table[address] = newNode;
     
