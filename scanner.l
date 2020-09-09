@@ -7,7 +7,6 @@
     
     int isRunning(void);
     int getLineNumber(void);
-    void initMe(void);
 %}
 
 %x COMMENT
