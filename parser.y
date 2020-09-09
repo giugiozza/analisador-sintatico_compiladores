@@ -36,8 +36,8 @@ int yyerror ();
 programa: listaDeDecl
 ;
     
-listaDeDecl: decl ',' listaDeDecl
-    |
+listaDeDecl: decl ';' listaDeDecl
+    |   decl
 ;
 
 decl:  KW_INT TK_IDENTIFIER

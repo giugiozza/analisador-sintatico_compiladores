@@ -400,8 +400,8 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      28,    29,     2,     2,    27,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      28,    29,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    27,
        2,    32,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -432,17 +432,17 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,     9,    10,    13,    19,    23,    26,
-      27
+       0,     0,     3,     5,     9,    11,    14,    20,    24,    27,
+      28
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      34,     0,    -1,    35,    -1,    36,    27,    35,    -1,    -1,
-       4,    19,    -1,     4,    19,    28,    29,    37,    -1,    30,
-      38,    31,    -1,    39,    38,    -1,    -1,    19,    32,    20,
-      -1
+      34,     0,    -1,    35,    -1,    36,    27,    35,    -1,    36,
+      -1,     4,    19,    -1,     4,    19,    28,    29,    37,    -1,
+      30,    38,    31,    -1,    39,    38,    -1,    -1,    19,    32,
+      20,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -463,7 +463,7 @@ static const char *const yytname[] =
   "KW_READ", "KW_PRINT", "KW_RETURN", "OPERATOR_LE", "OPERATOR_GE",
   "OPERATOR_EQ", "OPERATOR_DIF", "TK_IDENTIFIER", "LIT_INTEGER",
   "LIT_FLOAT", "LIT_TRUE", "LIT_FALSE", "LIT_CHAR", "LIT_STRING",
-  "TOKEN_ERROR", "','", "'('", "')'", "'{'", "'}'", "'='", "$accept",
+  "TOKEN_ERROR", "';'", "'('", "')'", "'{'", "'}'", "'='", "$accept",
   "programa", "listaDeDecl", "decl", "body", "listaDeCmd", "cmd", 0
 };
 #endif
@@ -475,7 +475,7 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,    44,    40,    41,
+     275,   276,   277,   278,   279,   280,   281,    59,    40,    41,
      123,   125,    61
 };
 # endif
@@ -490,7 +490,7 @@ static const yytype_uint8 yyr1[] =
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     3,     0,     2,     5,     3,     2,     0,
+       0,     2,     1,     3,     1,     2,     5,     3,     2,     0,
        3
 };
 
@@ -499,7 +499,7 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       4,     0,     0,     2,     0,     5,     1,     4,     0,     3,
+       0,     0,     0,     2,     4,     5,     1,     0,     0,     3,
        0,     9,     6,     0,     0,     9,     0,     7,     8,    10
 };
 
@@ -1581,7 +1581,6 @@ yyreturn:
 
 int yyerror (){
     fprintf(stderr, "Erro de sintaxe na linha %d.\n", getLineNumber());
-    //TO DO: informar a linha onde o erro ocorreu
     
     //erro de sintaxe - retorna código 3
     exit(3);
