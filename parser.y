@@ -30,9 +30,11 @@
 
 //regras para os operadores - associatividade à ESQUERDA
 //precedência aumenta p/ baixo
+%left '|' '^'
+%left '<' '>' OPERATOR_EQ OPERATOR_DIF OPERATOR_LE OPERATOR_GE
 %left '+' '-'
 %left '*' '/'
-%left '<' '>' OPERATOR_EQ
+%left '~'
  
 %{
 
@@ -42,44 +44,142 @@ int yyerror ();
 
 %%
 
+ /* INÍCIO DO PROGRAMA -> LISTAS DE DECLARAÇÃO */
 programa: listaDeDecl
     ;
 
- /* LISTAS DE DECLARAÇÃO */
-listaDeDecl: decl resto
+ /* declaração ou é de variável, ou é função ou é vazia */
+listaDeDecl: declVar ';' listaDeDecl
+    | declFun ';' listaDeDecl
     |
     ;
 
-resto: ',' decl resto
+ /* declaração de variável ou é simples ou é um vetor */
+declVar: varSimples
+    | vetor
+    ;
+
+ /* declaração de função é um cabeçalho seguido do corpo */
+declFun: header bloco
+    ;
+
+ /* variáveis que não são vetores devem ter seu valor inicializado */
+varSimples: TK_IDENTIFIER '=' tipo ':' valorLiteral
+    ;
+
+ /* vetores podem ser inicializados ou não */
+vetor: TK_IDENTIFIER '=' tipo '[' LIT_INTEGER ']'
+    | TK_IDENTIFIER '=' tipo '[' LIT_INTEGER ']' ':' valorVetor
+    ;
+
+tipo: KW_CHAR
+    | KW_INT
+    | KW_FLOAT
+    | KW_BOOL
+    ;
+
+valorLiteral: LIT_INTEGER
+    | LIT_FLOAT
+    | LIT_TRUE
+    | LIT_FALSE
+    | LIT_CHAR
+    ;
+
+valorVetor: valorLiteral
+    | valorLiteral valorVetor
+    ;
+
+header: TK_IDENTIFIER '(' listaParametros ')' '=' tipo
+    |  TK_IDENTIFIER '(' ')' '=' tipo
+    ;
+
+bloco: '{' listaCmd '}'
+    ;
+
+listaParametros: TK_IDENTIFIER '=' tipo contParametros
+    ;
+
+ /* continuação dos parâmetros (tail) */
+contParametros: ',' listaParametros
     |
     ;
 
-decl:  KW_INT TK_IDENTIFIER
-    | KW_INT TK_IDENTIFIER '(' ')' body
+listaCmd: cmd listaCmd
+    | cmd
     ;
 
-body: '{' listaDeCmd '}'
-    ;
-
-listaDeCmd: cmd listaDeCmd
+cmd: atribuicao
+    | controleFluxo
+    | cmdRead
+    | cmdPrint
+    | cmdReturn
+    | bloco
     |
     ;
 
-cmd: TK_IDENTIFIER '=' expressao
-    | KW_IF expressao cmd
-    | KW_IF expressao cmd KW_ELSE cmd
+atribuicao: TK_IDENTIFIER '=' expressao
+    | TK_IDENTIFIER '[' expressao ']' '=' expressao
     ;
 
-expressao: LIT_INTEGER
+controleFluxo: cmdIf
+    | cmdWhile cmd
+    | cmdLoop cmd
+    ;
+
+cmdRead: KW_READ TK_IDENTIFIER
+    ;
+
+cmdPrint: KW_PRINT listaPrint
+    ;
+
+listaPrint: LIT_STRING ',' listaPrint
+    | LIT_STRING
+    | expressao ',' listaPrint
+    | expressao
+    ;
+
+cmdReturn: KW_RETURN expressao
+    ;
+
+cmdIf: KW_IF '(' expressao ')' KW_THEN cmd
+    | KW_IF '(' expressao ')' KW_THEN cmd KW_ELSE cmd
+    ;
+
+cmdWhile: KW_WHILE '(' expressao ')'
+    ;
+
+cmdLoop: KW_LOOP '(' TK_IDENTIFIER ':' expressao ',' expressao ',' expressao ')'
+    ;
+
+expressao: valorLiteral
     | TK_IDENTIFIER
+    | TK_IDENTIFIER '[' expressao ']'
     | expressao '+' expressao
     | expressao '-' expressao
     | expressao '*' expressao
     | expressao '/' expressao
     | expressao '>' expressao
     | expressao '<' expressao
+    | expressao '|' expressao
+    | expressao '^' expressao
+    | '~' expressao
+    | '-' expressao
     | expressao OPERATOR_EQ expressao
+    | expressao OPERATOR_DIF expressao
+    | expressao OPERATOR_LE expressao
+    | expressao OPERATOR_GE expressao
     | '(' expressao ')'
+    | chamadaFunc
+    ;
+
+chamadaFunc: TK_IDENTIFIER '(' listaArgumentos ')'
+    ;
+
+listaArgumentos: expressao contlistaArgumentos
+    ;
+
+contlistaArgumentos: ',' listaArgumentos
+    |
     ;
 
 %%

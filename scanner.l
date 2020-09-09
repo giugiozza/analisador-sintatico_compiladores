@@ -2,6 +2,15 @@
     #include "y.tab.h"
     #include "hash.c"
     
+    #define SYMBOL_LIT_INT 1
+    #define SYMBOL_LIT_FLOAT 2
+    #define SYMBOL_LIT_CHAR 3
+    #define SYMBOL_LIT_STRING 4
+    #define SYMBOL_LIT_TRUE 5
+    #define SYMBOL_LIT_FALSE 6
+    #define SYMBOL_IDENTIFIER 7
+    
+    
     int Running = 1;
     int lineNumber = 1;
     
@@ -47,19 +56,19 @@
 "FALSE" return LIT_FALSE;
 
  /* LITERAIS INTEIROS */
-[A-F0-9]+   {hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER;}
+[A-F0-9]+   {hashInsert(yytext, SYMBOL_LIT_INT); return LIT_INTEGER;}
 
  /* LITERAIS FLOAT */
-[A-F0-9]*\.[A-F0-9]+    {hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT;}
+[A-F0-9]*\.[A-F0-9]+    {hashInsert(yytext, SYMBOL_LIT_FLOAT); return LIT_FLOAT;}
 
  /* STRING */
-\"([^"\\\n]|\\.)*\" {hashInsert(yytext, LIT_STRING); return LIT_STRING;}
+\"([^"\\\n]|\\.)*\" {hashInsert(yytext, SYMBOL_LIT_STRING); return LIT_STRING;}
 
  /* CARACTERE */
-\'(\\.|[^'\n\t])'    {hashInsert(yytext, LIT_CHAR); return LIT_CHAR;}
+\'(\\.|[^'\n\t])'    {hashInsert(yytext, SYMBOL_LIT_CHAR); return LIT_CHAR;}
 
  /* IDENTIFICADORES */
-[a-zA-Z@_]+[0-9A-Za-z@_]*   {hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER;}
+[a-zA-Z@_]+[0-9A-Za-z@_]*   {hashInsert(yytext, SYMBOL_IDENTIFIER); return TK_IDENTIFIER;}
 
  /* COMENTÁRIOS */
 "//".*
