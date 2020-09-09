@@ -2017,7 +2017,3 @@ int getLineNumber(void){
     return lineNumber;
 }
 
-void initMe(void){
-    hashInit();
-}
-

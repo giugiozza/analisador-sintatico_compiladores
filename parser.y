@@ -32,6 +32,7 @@
 //precedência aumenta p/ baixo
 %left '+' '-'
 %left '*' '/'
+%left '<' '>' OPERATOR_EQ
  
 %{
 
@@ -43,7 +44,8 @@ int yyerror ();
 
 programa: listaDeDecl
     ;
-    
+
+ /* LISTAS DE DECLARAÇÃO */
 listaDeDecl: decl resto
     |
     ;
@@ -64,6 +66,8 @@ listaDeCmd: cmd listaDeCmd
     ;
 
 cmd: TK_IDENTIFIER '=' expressao
+    | KW_IF expressao cmd
+    | KW_IF expressao cmd KW_ELSE cmd
     ;
 
 expressao: LIT_INTEGER

@@ -15,8 +15,8 @@ int main(int argc, char ** argv){
         exit(2);
     }
     
-    initMe();
-    
+    hashInit();
+
     yyparse();
     
     //TO DO: retirar cmd hashPrint
