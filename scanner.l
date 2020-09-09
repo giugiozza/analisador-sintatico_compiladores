@@ -1,5 +1,5 @@
 %{
-    #include "tokens.h"
+    #include "y.tab.h"
     #include "hash.c"
     
     int Running = 1;
