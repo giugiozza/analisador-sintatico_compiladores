@@ -33,22 +33,31 @@ int yyerror ();
 
 %%
 
-programa: listaDec
-    ;
+programa: listaDeDecl
+;
     
-listaDec: dec ',' listaDec
+listaDeDecl: decl ',' listaDeDecl
     |
-    ;
+;
 
-dec:  KW_INT TK_IDENTIFIER
-    | KW_INT TK_IDENTIFIER '(' ')' '{' '}'
-    ;
+decl:  KW_INT TK_IDENTIFIER
+    | KW_INT TK_IDENTIFIER '(' ')' body
+;
+
+body: '{' listaDeCmd '}'
+;
+
+listaDeCmd: cmd listaDeCmd
+    |
+;
+
+cmd: TK_IDENTIFIER '=' LIT_INTEGER
+;
 
 %%
 
 int yyerror (){
-    fprintf(stderr, "Syntax error.\n");
-    //TO DO: informar a linha onde o erro ocorreu
+    fprintf(stderr, "Erro de sintaxe na linha %d.\n", getLineNumber());
     
     //erro de sintaxe - retorna código 3
     exit(3);
