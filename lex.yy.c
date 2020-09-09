@@ -540,7 +540,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
-    #include "tokens.h"
+    #include "y.tab.h"
     #include "hash.c"
     
     int Running = 1;
@@ -2001,6 +2001,7 @@ void yyfree (void * ptr )
 
 
 
+#include "y.tab.c"
 #include "main.c"
 
 int isRunning(void){

@@ -1,5 +1,3 @@
-
-
 %token KW_CHAR
 %token KW_INT
 %token KW_FLOAT
@@ -26,8 +24,32 @@
 
 %token TOKEN_ERROR
 
+ 
+%{
+
+int yyerror ();
+
+%}
+
 %%
 
-programa: TK_IDENTIFIER | LIT_INTEGER ;
+programa: listaDec
+    ;
+    
+listaDec: dec ',' listaDec
+    |
+    ;
+
+dec:  KW_INT TK_IDENTIFIER
+    | KW_INT TK_IDENTIFIER '(' ')' '{' '}'
+    ;
 
 %%
+
+int yyerror (){
+    fprintf(stderr, "Syntax error.\n");
+    //TO DO: informar a linha onde o erro ocorreu
+    
+    //erro de sintaxe - retorna código 3
+    exit(3);
+}

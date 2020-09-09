@@ -75,6 +75,7 @@
 
 %%
 
+#include "y.tab.c"
 #include "main.c"
 
 int isRunning(void){
