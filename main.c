@@ -19,9 +19,11 @@ int main(int argc, char ** argv){
     
     yyparse();
     
+    //TO DO: retirar cmd hashPrint
     hashPrint();
     
     //concluiu com sucesso - retorna código 0
+    fprintf(stderr, "\nExit 0 - Sucesso.\n");
     exit(0);
     
 }
